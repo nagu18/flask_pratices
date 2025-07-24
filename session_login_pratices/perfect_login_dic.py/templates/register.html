@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER_REGISTRATION TERMINAL</title>
+    <style>
+        /* Cyberpunk Theme Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Share+Tech+Mono&display=swap');
+        
+        :root {
+            --neon-green: #00ff41;
+            --neon-blue: #00f7ff;
+            --neon-pink: #ff00a0;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --terminal-black: #121212;
+            --glow: 0 0 10px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-green);
+            font-family: 'Share Tech Mono', monospace;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+        
+        /* Falling code animation */
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.2;
+        }
+        
+        /* Login container */
+        .terminal-container {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 5vh auto;
+            padding: 2rem;
+            background-color: rgba(18, 18, 18, 0.8);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            border-radius: 5px;
+            animation: flicker 0.5s infinite alternate;
+        }
+        
+        /* Header styling */
+        .terminal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .terminal-header h1 {
+            font-family: 'Major Mono Display', monospace;
+            color: var(--neon-green);
+            text-shadow: var(--glow) var(--neon-green);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        
+        .terminal-header img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 5px var(--neon-green));
+        }
+        
+        /* Form styling */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+        }
+        
+        .login-link a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .login-link a:hover {
+            color: var(--neon-pink);
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background-color: var(--terminal-black);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            font-family: 'Share Tech Mono', monospace;
+            border-radius: 3px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+        
+        /* Button styling */
+        .submit-btn {
+            background-color: var(--neon-green);
+            color: var(--terminal-black);
+            border: none;
+            padding: 0.8rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        .submit-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 247, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+        
+        /* Status message and links */
+        .status-message, .login-link {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            min-height: 20px;
+        }
+        
+        /* Animations */
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            50% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+        
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 var(--neon-blue), -0.05em -0.025em 0 var(--neon-pink); }
+            14% { text-shadow: 0.05em 0 0 var(--neon-blue), -0.05em -0.025em 0 var(--neon-pink); }
+            15% { text-shadow: -0.05em -0.025em 0 var(--neon-blue), 0.025em 0.025em 0 var(--neon-pink); }
+            49% { text-shadow: -0.05em -0.025em 0 var(--neon-blue), 0.025em 0.025em 0 var(--neon-pink); }
+            50% { text-shadow: 0.025em 0.05em 0 var(--neon-blue), 0.05em 0 0 var(--neon-pink), -0.025em -0.05em 0 var(--neon-green); }
+            99% { text-shadow: 0.025em 0.05em 0 var(--neon-blue), 0.05em 0 0 var(--neon-pink), -0.025em -0.05em 0 var(--neon-green); }
+            100% { text-shadow: -0.025em 0 0 var(--neon-blue), -0.025em -0.025em 0 var(--neon-pink), -0.025em -0.05em 0 var(--neon-green); }
+        }
+        
+        .glitch-effect {
+            animation: glitch 2s infinite;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .terminal-container {
+                margin: 2vh auto;
+                width: 90%;
+                padding: 1.5rem;
+            }
+            
+            .terminal-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix rain animation -->
+    <canvas id="matrix" class="matrix-rain"></canvas>
+    
+    <!-- Main terminal container -->
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/55082049-4770-4b3b-ad95-c1fbd8bd297b.png" alt="Cyberpunk-style terminal logo with circuitry pattern in neon green on black background" />
+            <h1 class="glitch-effect">NEW USER REGISTRATION</h1>
+            <p>SECURITY TERMINAL v3.7.4</p>
+            <p class="login-link">Existing user? <a href="login.html">Login here</a></p>
+        </div>
+        
+        <form class="login-form" id="registerForm" method="post">
+            <div class="input-group">
+                <label for="username">HANDLE:</label>
+                <input type="text" id="username" name="username" required placeholder="CHOOSE YOUR ID">
+            </div>
+            
+            <div class="input-group">
+                <label for="email">SECURE CONTACT:</label>
+                <input type="email" id="email" name="email" required placeholder="your@secure.dmx">
+            </div>
+
+            <div class="input-group">
+                <label for="password">ACCESS CODE:</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••" minlength="8">
+            </div>
+            
+            <button type="submit" class="submit-btn">REGISTER</button>
+            
+            <div class="status-message" id="statusMessage"></div>
+        </form>
+    </div>
+
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const katakana = ''.concat(
+            '\u30a2\u30a4\u30a6\u30a8\u30aa\u30ab\u30ad\u30af\u30b1\u30b3\u30b5\u30b7\u30b9\u30bb\u30bd',
+            '\u30bf\u30c1\u30c4\u30c6\u30c8\u30ca\u30cb\u30cc\u30cd\u30ce\u30cf\u30d2\u30d5\u30d8\u30db',
+            '\u30de\u30df\u30e0\u30e1\u30e2\u30e4\u30e6\u30e8\u30e9\u30ea\u30eb\u30ed\u30ef\u30f2\u30f3'
+        );
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        
+        const alphabet = katakana + latin + nums;
+        
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        
+        const rainDrops = [];
+        
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+        
+        const draw = () => {
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+        
+        setInterval(draw, 30);
+        
+        // Form submission handling
+        const registerForm = document.getElementById('registerForm');
+        const statusMessage = document.getElementById('statusMessage');
+        
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simulate registration process
+            statusMessage.textContent = "CONNECTING TO DATABASE...";
+            statusMessage.style.color = var(--neon-blue);
+            
+            setTimeout(() => {
+                if (username && email && password) {
+                    statusMessage.textContent = "REGISTRATION COMPLETE";
+                    statusMessage.style.color = var(--neon-green);
+                    registerForm.reset();
+                } else {
+                    statusMessage.textContent = "ERROR: INVALID REGISTRATION DATA";
+                    statusMessage.style.color = var(--neon-pink);
+                }
+            }, 2000);
+        });
+        
+        // Window resize handler
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
+
+
